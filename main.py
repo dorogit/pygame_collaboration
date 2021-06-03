@@ -14,10 +14,12 @@ screen.blit(gallow,((-60,20)))
 pygame.mixer.music.load('sound.mp3')
 pygame.mixer.music.play(-1)
 
-run= True
+#HangMan
 font1 = pygame.font.Font(None, 70)
 img1 = font1.render('HANGMAN',True, (0,0,0))
 screen.blit(img1,(375,40))
+
+run= True
 
 while run:
   event = pygame.event.wait()
