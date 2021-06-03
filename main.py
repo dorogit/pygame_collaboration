@@ -9,13 +9,16 @@ gallow = pygame.image.load('gallow.png')
 screen.fill((200,200,200))
 Clock = pygame.time.Clock()
 pygame.display.update()
+#music
+pygame.mixer.music.load('sound.mp3')
+pygame.mixer.music.play(-1)
 
 run= True
 
 while run:
   event = pygame.event.wait()
   pressed = pygame.key.get_pressed()
-  if pressed[pygame.K_ESCAPE]:
+  if pressed[pygame.K_ESCAPE] or event.type==pygame.QUIT:
     break
   pygame.display.update()
   Clock.tick(30)
