@@ -21,15 +21,17 @@ font1 = pygame.font.Font(None, 70)
 img1 = font1.render('HANGMAN',True, (0,0,0))
 screen.blit(img1,(375,40))
 
+input_box = pygame.Rect(430,250,550,50)
+font = pygame.font.Font(None,32)
+input_text = ''
+ColorForActive = pygame.Color('lightskyblue3')
+ColorWhenNotClicked = (0,0,0)
+Color = ColorWhenNotClicked
+Active = False
+
 #defining a function for input box
 def input():
-  input_box = pygame.Rect(430,250,550,50)
-  font = pygame.font.Font(None,32)
-  input_text = ''
-  ColorForActive = pygame.Color('lightskyblue3')
-  ColorWhenNotClicked = pygame.Color('chartreuse4')
-  Color = ColorWhenNotClicked
-  Active = False
+  global input_box,font,input_text,ColorForActive,ColorWhenNotClicked,color,Active
 
   for event in pygame.event.get():
 
@@ -54,21 +56,19 @@ def input():
 
       Color = ColorWhenNotClicked
     
-    pygame.draw.rect(screen, Color, input_box, width=5)
-    text = font.render(input_text, True , (0,0,0))
+    pygame.draw.rect(screen, Color, input_box)
+    text = font.render(input_text, True , (200,200,200))
     screen.blit(text,(input_box.x+5, input_box.y+5))
 
     #to ensure text doesnt move out of the box
-    input_box.w = max(100, text.get_width()+10)
+    input_box.w = max(100,text.get_width()+10)
     pygame.display.update()
 run = True
 
 while run:
-  event = pygame.event.wait()
   pressed = pygame.key.get_pressed()
-  if pressed[pygame.K_ESCAPE] or event.type==pygame.QUIT:
+  if pressed[pygame.K_ESCAPE]:
     break
   input()
-  pygame.display.update()
-  Clock.tick(30)
+  Clock.tick(60)
 
