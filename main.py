@@ -8,12 +8,16 @@ pygame.display.set_caption('HangMan')
 gallow = pygame.image.load('gallow.png')
 screen.fill((200,200,200))
 Clock = pygame.time.Clock()
-pygame.display.update()
+screen.blit(gallow,((-60,20)))
+
 #music
 pygame.mixer.music.load('sound.mp3')
 pygame.mixer.music.play(-1)
 
 run= True
+font1 = pygame.font.Font(None, 70)
+img1 = font1.render('HANGMAN',True, (0,0,0))
+screen.blit(img1,(375,40))
 
 while run:
   event = pygame.event.wait()
@@ -22,4 +26,3 @@ while run:
     break
   pygame.display.update()
   Clock.tick(30)
-  screen.blit(gallow,((0,0)))
