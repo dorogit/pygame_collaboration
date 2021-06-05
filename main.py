@@ -42,7 +42,7 @@ while run:
           
           input_text = input_text[:-1]
 
-        else:
+        elif event.key!=pygame.K_RETURN:
           input_text += event.unicode
 
         pygame.draw.rect(screen, Color, input_box)
