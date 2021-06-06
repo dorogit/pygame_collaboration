@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 pygame.init()
 
@@ -26,16 +25,19 @@ input_box = pygame.Rect(430,250,550,50)
 font3 = pygame.font.Font(None, 43)
 font4 = pygame.font.Font(None, 30)
 input_box_text = font3.render('Word to be guessed goes here',True, (0,0,0))
-small_text = font4.render('(press enter)',True,(0,0,0))
+small_text = font4.render('press enter',True,(0,0,0))
 screen.blit(small_text, (630,222))
 screen.blit(input_box_text,((500, 190)))
 font = pygame.font.Font(None,32)
 input_text = ''
+guess = ''
+guesses = ''
 Color = (0,0,0)
-Tries = 5
+chances = 5
+letter_in_guessbox = False
+
 
 #functions for hangman parts
-
 def draw_head():
   pygame.draw.circle(screen, (0,0,0,), (273,165), 50, width = 7)
 
@@ -47,11 +49,12 @@ def draw_leg1():
 
 def draw_leg2():
   pygame.draw.line(screen,(0,0,0), (273,476),(373,645), width = 7)
-
+#incomplete 
 
 
 run = True
 typing = True
+typing2 = False
 while run:
 
   pressed = pygame.key.get_pressed()
@@ -67,33 +70,12 @@ while run:
           
           input_text = input_text[:-1]
 
-        #this part is for terminating input and starting the hangman blitting
-        if event.key == pygame.K_RETURN:
-          if typing != False:
-            typing = False
-            
-          if Tries == 5:
-            draw_head()
-            Tries -=1
-            
-          if Tries == 4:
-            draw_torso()
-            Tries -=1
-            
-          if Tries == 3:
-            draw_leg1()
-            Tries -=1
-  
-          if Tries == 2:
-            draw_leg2()
-            Tries -=1
-          
         #converting keys to text
         elif event.key!=pygame.K_RETURN and event.key!=pygame.K_ESCAPE:
           #checking if input is alphabet
           if event.unicode.isalpha():
             input_text += event.unicode
-        
+
         #blitting text box and rendering text
         pygame.draw.rect(screen, Color, input_box)
         text = font.render(input_text, True , (200,200,200))
@@ -102,6 +84,68 @@ while run:
         #to ensure text doesnt move out of the box
         input_box.w = max(100,text.get_width()+10)
         pygame.display.update()
+        if event.key == pygame.K_RETURN:
+
+          #rendering text for letter input box and removing the old text
+          typing = False
+          typing2 = True
+          pygame.draw.rect(screen, (0,0,0), input_box)
+          pygame.draw.rect(screen, (200,200,200),pygame.Rect(499,190,500,33))
+          pygame.draw.rect(screen, (200,200,200),pygame.Rect(630,222,300,20))
+          guess_text = font3.render('Letter to be guessed goes here',True, (0,0,0))
+          small_text2 = font4.render('1 at a time',True,(0,0,0))
+          screen.blit(small_text2,((630,222)))
+          screen.blit(guess_text,((500, 190)))
+      
+      word = input_text
+
+      if typing2 == True:
+        
+        if event.key == pygame.K_BACKSPACE:
+          #to ensure only 1 letter is allowed in the guessbox
+          guesses = guesses[:-1]   
+          letter_in_guessbox = False       
+        #converting keys to text
+        elif event.key!=pygame.K_RETURN and event.key!=pygame.K_ESCAPE:
+          #checking if input is alphabet
+          if letter_in_guessbox == False:
+            if event.unicode.isalpha():
+              guess += event.unicode
+              letter_in_guessbox = True
+        
+        while chances > 0: 
+     
+          failed = 0
+          for char in word:
+            if char in guesses:
+              print(char)
+             
+            else:
+              print("_")
+              failed += 1
+ 
+          if failed == 0:
+            print("You Win")
+            print("The word is: ", word)
+            break
+          guesses += guess
+          if guess not in word:    
+            chances -= 1
+            print("Wrong")
+            print("You have", + chances, 'more guesses')
+         
+            if chances == 0:
+              print("You Loose")
+
+        #blitting text box and rendering text
+        pygame.draw.rect(screen, Color, input_box)
+        text = font.render(guess, True , (200,200,200))
+        screen.blit(text,(input_box.x+5, input_box.y+5))
+
+        #to ensure text doesnt move out of the box
+        input_box.w = max(100,text.get_width()+10)
+        pygame.display.update()
+
   pygame.display.update()
   Clock.tick(60)
 print(pygame.mouse.get_pos())
