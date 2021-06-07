@@ -1,4 +1,5 @@
 import pygame
+from pygame.constants import K_RETURN
 
 pygame.init()
 
@@ -31,9 +32,10 @@ screen.blit(input_box_text,((500, 190)))
 font = pygame.font.Font(None,32)
 input_text = ''
 guess = ''
-guesses = ''
+hidden_word = ''
 Color = (0,0,0)
-chances = 5
+Tries = 5
+num = 0
 letter_in_guessbox = False
 
 
@@ -52,6 +54,9 @@ def draw_leg2():
 #incomplete 
 
 
+run = True
+typing = True
+typing2 = False
 run = True
 typing = True
 typing2 = False
@@ -101,42 +106,33 @@ while run:
 
       if typing2 == True:
         
-        if event.key == pygame.K_BACKSPACE:
+        if event.key == pygame.K_BACKSPACE and letter_in_guessbox == True:
           #to ensure only 1 letter is allowed in the guessbox
-          guesses = guesses[:-1]   
+          guess = guess[:-1]   
           letter_in_guessbox = False       
         #converting keys to text
         elif event.key!=pygame.K_RETURN and event.key!=pygame.K_ESCAPE:
           #checking if input is alphabet
           if letter_in_guessbox == False:
             if event.unicode.isalpha():
-              guess += event.unicode
+              guess = event.unicode
               letter_in_guessbox = True
-        
-        while chances > 0: 
-     
-          failed = 0
-          for char in word:
-            if char in guesses:
-              print(char)
-             
-            else:
-              print("_")
-              failed += 1
- 
-          if failed == 0:
-            print("You Win")
-            print("The word is: ", word)
-            break
-          guesses += guess
-          if guess not in word:    
-            chances -= 1
-            print("Wrong")
-            print("You have", + chances, 'more guesses')
-         
-            if chances == 0:
-              print("You Loose")
 
+        for letter in range(len(word)):
+          hidden_word += '_'
+        for chance in range(Tries):
+          hidden_word = list(hidden_word)
+          word = list(word)
+          for alph in word:
+            if alph == guess: 
+              hidden_word[num] = word[num]
+            num = num + 1
+          num = 0
+          hidden_word = ''.join(hidden_word)
+          word = ''.join(word)
+        if event.key == pygame.K_RETURN and typing2 == True:
+          Tries = Tries - 1
+          print(hidden_word)
         #blitting text box and rendering text
         pygame.draw.rect(screen, Color, input_box)
         text = font.render(guess, True , (200,200,200))
