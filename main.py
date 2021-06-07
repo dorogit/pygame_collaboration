@@ -53,10 +53,6 @@ def draw_leg2():
   pygame.draw.line(screen,(0,0,0), (273,476),(373,645), width = 7)
 #incomplete 
 
-
-run = True
-typing = True
-typing2 = False
 run = True
 typing = True
 typing2 = False
