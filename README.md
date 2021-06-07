@@ -1,7 +1,6 @@
 # pygame_collaboration
 
 Repository for making a PyGame “HangMan” 
-A collab by Ameya and Ishaan
 
 HangMan is a word-guessing two-player game in which one player creates a word to be guessed
 then, all the letters of the word will be shown represented as dashes(-) and the guesser 
