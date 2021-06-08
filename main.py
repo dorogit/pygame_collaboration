@@ -26,7 +26,7 @@ input_box = pygame.Rect(430,250,550,50)
 font3 = pygame.font.Font(None, 43)
 font4 = pygame.font.Font(None, 30)
 input_box_text = font3.render('Word to be guessed goes here',True, (0,0,0))
-small_text = font4.render('press enter',True,(0,0,0))
+small_text = font4.render('press spacebar',True,(0,0,0))
 screen.blit(small_text, (630,222))
 screen.blit(input_box_text,((500, 190)))
 font = pygame.font.Font(None,32)
@@ -111,8 +111,8 @@ while run:
           pygame.draw.rect(screen, (0,0,0), input_box)
           pygame.draw.rect(screen, (200,200,200),pygame.Rect(499,190,500,33))
           pygame.draw.rect(screen, (200,200,200),pygame.Rect(630,222,300,20))
-          guess_text = font3.render('Letter to be guessed goes here',True, (0,0,0))
-          small_text2 = font4.render('1 at a time',True,(0,0,0))
+          guess_text = font3.render('Guess a letter from the word',True, (0,0,0))
+          small_text2 = font4.render('(press enter)',True,(0,0,0))
           screen.blit(small_text2,((630,222)))
           screen.blit(guess_text,((500, 190)))
       
@@ -134,6 +134,10 @@ while run:
 
         guessing(word)
         if event.key == pygame.K_RETURN and typing2 == True:
+          guessing(word)
+          #blitting the hidden word
+          hidden_word_text = font1.render(hidden_word,True, (0,0,0))
+          screen.blit(hidden_word_text, (500,500)) 
           Tries = Tries - 1
           print('the word you have to guess is :',hidden_word)
           print('tries remaining : ', Tries)
@@ -145,6 +149,7 @@ while run:
         #to ensure text doesnt move out of the box
         input_box.w = max(100,text.get_width()+10)
         pygame.display.update()
+
 
   pygame.display.update()
   Clock.tick(60)
