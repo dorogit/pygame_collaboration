@@ -35,9 +35,27 @@ guess = ''
 hidden_word = ''
 Color = (0,0,0)
 Tries = 5
-num = 0
+index = 0
 letter_in_guessbox = False
+convert = False
 
+def guessing(word):
+  global hidden_word,index,convert
+
+  for letter in range(len(word)):
+    if convert == False:
+      hidden_word += '_'
+  convert = True
+  for chance in range(Tries):
+    hidden_word = list(hidden_word)
+    word = list(word)
+    for alph in word:
+      index = index + 1
+      if alph == guess:
+        hidden_word[index-1] = word[index-1]
+    index = 0
+    hidden_word = ''.join(hidden_word)
+    word = ''.join(word)
 
 #functions for hangman parts
 def draw_head():
@@ -85,7 +103,7 @@ while run:
         #to ensure text doesnt move out of the box
         input_box.w = max(100,text.get_width()+10)
         pygame.display.update()
-        if event.key == pygame.K_RETURN:
+        if event.key == pygame.K_SPACE:
 
           #rendering text for letter input box and removing the old text
           typing = False
@@ -114,21 +132,11 @@ while run:
               guess = event.unicode
               letter_in_guessbox = True
 
-        for letter in range(len(word)):
-          hidden_word += '_'
-        for chance in range(Tries):
-          hidden_word = list(hidden_word)
-          word = list(word)
-          for alph in word:
-            if alph == guess: 
-              hidden_word[num] = word[num]
-            num = num + 1
-          num = 0
-          hidden_word = ''.join(hidden_word)
-          word = ''.join(word)
+        guessing(word)
         if event.key == pygame.K_RETURN and typing2 == True:
           Tries = Tries - 1
-          print(hidden_word)
+          print('the word you have to guess is :',hidden_word)
+          print('tries remaining : ', Tries)
         #blitting text box and rendering text
         pygame.draw.rect(screen, Color, input_box)
         text = font.render(guess, True , (200,200,200))
