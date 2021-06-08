@@ -82,6 +82,7 @@ def draw_arm2():
 def draw_face_happy():
   pygame.draw.circle(screen, (0,0,0), (256, 162), 5)
   pygame.draw.circle(screen, (0,0,0), (296, 162), 5)
+  pygame.draw.arc
 
 
 
@@ -89,11 +90,12 @@ run = True
 typing = True
 typing2 = False
 while run:
-
   pressed = pygame.key.get_pressed()
   if pressed[pygame.K_ESCAPE]:
     break
   for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      run = False
 
     if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
 
