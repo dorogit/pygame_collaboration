@@ -1,5 +1,4 @@
 import pygame
-from pygame.constants import K_RETURN
 
 pygame.init()
 
@@ -34,10 +33,12 @@ input_text = ''
 guess = ''
 hidden_word = ''
 Color = (0,0,0)
-Tries = 5
+Tries = 6
 index = 0
 letter_in_guessbox = False
 convert = False
+Fails = 0
+draw_once = False
 
 def guessing(word):
   global hidden_word,index,convert
@@ -69,7 +70,20 @@ def draw_leg1():
 
 def draw_leg2():
   pygame.draw.line(screen,(0,0,0), (273,476),(373,645), width = 7)
-#incomplete 
+
+def draw_arm1():
+  pygame.draw.line(screen, (0,0,0), (275, 277),(210,350),width = 7)
+  pygame.draw.line(screen, (0,0,0), (210, 350),(300,449),width = 7)
+
+def draw_arm2():
+  pygame.draw.line(screen, (0,0,0),(275, 277),(340,350),width = 7)
+  pygame.draw.line(screen, (0,0,0),(340, 350),(250,449),width = 7)
+
+def draw_face_happy():
+  pygame.draw.circle(screen, (0,0,0), (256, 162), 5)
+  pygame.draw.circle(screen, (0,0,0), (296, 162), 5)
+
+
 
 run = True
 typing = True
@@ -81,7 +95,7 @@ while run:
     break
   for event in pygame.event.get():
 
-    if event.type == pygame.KEYDOWN:
+    if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
 
       if typing == True:
         
@@ -134,14 +148,68 @@ while run:
 
         guessing(word)
         if event.key == pygame.K_RETURN and typing2 == True:
+
+          #putting a rect to hide old text
+          pygame.draw.rect(screen, (200,200,200), pygame.Rect(500,500,500,500))
+
+          #calling the guess function upon entering
           guessing(word)
-          #blitting the hidden word
+
+          #blitting the hidden word and other text
           hidden_word_text = font1.render(hidden_word,True, (0,0,0))
           screen.blit(hidden_word_text, (500,500)) 
           Tries = Tries - 1
-          print('the word you have to guess is :',hidden_word)
-          print('tries remaining : ', Tries)
-        #blitting text box and rendering text
+          Tries_string = 'Tries remaining : {}'.format(Tries)
+          Tries_text = font1.render(Tries_string,True,(0,0,0))
+          screen.blit(Tries_text, (450,600))
+
+          #if player completely guesses the word
+          if hidden_word == word and Tries >=0:
+            font0 = pygame.font.Font(None,50)
+            pygame.draw.rect(screen, (200,200,200), pygame.Rect(400,500,500,500))
+            hangman_text = font0.render('HangMan Lives ', True,(0,0,0))
+            screen.blit(hangman_text,(500,500))
+          
+          #drawing hangman upon failure of guesses
+          if Fails == 0 and guess not in word and draw_once == False:
+            draw_head()
+            Fails += 1
+            draw_once = True
+
+          if Fails == 1 and guess not in word and draw_once == False:
+            draw_torso()
+            Fails += 1
+            draw_once = True
+
+          if Fails == 2 and guess not in word and draw_once == False:
+            draw_leg1()
+            Fails += 1
+            draw_once = True
+          
+          if Fails == 3 and guess not in word and draw_once == False:
+            draw_leg2()
+            Fails += 1
+            draw_once = True
+           
+          if Fails == 4 and guess not in word and draw_once == False:
+            draw_arm1()
+            Fails += 1
+            draw_once = True
+          
+          if Fails == 5 and guess not in word and draw_once == False:
+            draw_arm2()
+            Fails += 1
+            draw_once = True
+
+          if Fails > 5 and guess not in word and draw_once == False:
+            draw_face_happy()
+            
+
+          #draw one variable is used such that on pressing enter a single body 
+          #part will be shown on 1 failure insted of all at once
+          draw_once = False
+
+        #blitting text box and rendering text the input
         pygame.draw.rect(screen, Color, input_box)
         text = font.render(guess, True , (200,200,200))
         screen.blit(text,(input_box.x+5, input_box.y+5))
