@@ -1,4 +1,5 @@
 import pygame
+import math
 
 pygame.init()
 
@@ -39,6 +40,7 @@ letter_in_guessbox = False
 convert = False
 Fails = 0
 draw_once = False
+PI = math.pi
 
 def guessing(word):
   global hidden_word,index,convert
@@ -63,27 +65,19 @@ def draw_head():
   pygame.draw.circle(screen, (0,0,0,), (273,165), 50, width = 7)
 
 def draw_torso():
-  pygame.draw.line(screen,(0,0,0), (273, 213), (273,476), width = 7)
+  pygame.draw.line(screen,(0,0,0), (273, 213), (273,476), width = 12)
 
 def draw_leg1():
-  pygame.draw.line(screen,(0,0,0), (273,476),(163, 645), width = 7)
+  pygame.draw.line(screen,(0,0,0), (273,476),(160, 645), width = 12)
 
 def draw_leg2():
-  pygame.draw.line(screen,(0,0,0), (273,476),(373,645), width = 7)
+  pygame.draw.line(screen,(0,0,0), (273,476),(380,645), width = 12)
 
 def draw_arm1():
-  pygame.draw.line(screen, (0,0,0), (275, 277),(210,350),width = 7)
-  pygame.draw.line(screen, (0,0,0), (210, 350),(300,449),width = 7)
+  pygame.draw.line(screen, (0,0,0), (275, 300),(180,180),width = 12)
 
 def draw_arm2():
-  pygame.draw.line(screen, (0,0,0),(275, 277),(340,350),width = 7)
-  pygame.draw.line(screen, (0,0,0),(340, 350),(250,449),width = 7)
-
-def draw_face_happy():
-  pygame.draw.circle(screen, (0,0,0), (256, 162), 5)
-  pygame.draw.circle(screen, (0,0,0), (296, 162), 5)
-  pygame.draw.arc
-
+  pygame.draw.line(screen, (0,0,0),(275, 300),(360,180),width = 12)
 
 
 run = True
