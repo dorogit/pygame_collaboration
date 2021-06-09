@@ -81,7 +81,7 @@ def game_over_text():
     screen.blit (over_text, (600, 500))  
  
 def game_won():
-    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 255))
+    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 0))
     screen.blit (won_text, (350, 350))
 
 def draw_leg1():
