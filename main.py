@@ -1,5 +1,6 @@
 import pygame
 import math
+import time
 
 pygame.init()
 
@@ -34,7 +35,7 @@ input_text = ''
 guess = ''
 hidden_word = ''
 Color = (0,0,0)
-Tries = 6
+Tries = 10
 index = 0
 letter_in_guessbox = False
 convert = False
@@ -60,9 +61,9 @@ def guessing(word):
     hidden_word = ''.join(hidden_word)
     word = ''.join(word)
 
-#functions for hangman parts
+#functions for hangman parts and drawing hangman
 def draw_head():
-  pygame.draw.circle(screen, (0,0,0,), (273,165), 50, width = 7)
+  pygame.draw.circle(screen, (0,0,0,), (273,165), 50, width = 9)
 
 def draw_torso():
   pygame.draw.line(screen,(0,0,0), (273, 213), (273,476), width = 12)
@@ -78,6 +79,16 @@ def draw_arm1():
 
 def draw_arm2():
   pygame.draw.line(screen, (0,0,0),(275, 300),(360,180),width = 12)
+
+def Hang():
+  pygame.draw.rect(screen, (200,200,200), pygame.Rect(150,110,275,560))
+  pygame.draw.line(screen, (0,0,0), (273,50),(273,200),width = 9)
+  pygame.draw.circle(screen, (0,0,0,), (300,365-125), 50, width = 9)
+  pygame.draw.line(screen,(0,0,0), (273, 413-135), (273,676-125), width = 12)
+  pygame.draw.line(screen,(0,0,0), (273,676-125),(160, 845-125), width = 12)
+  pygame.draw.line(screen,(0,0,0), (273,676-125),(380,845-125), width = 12)
+  pygame.draw.line(screen, (0,0,0), (275, 500-125),(180,380-125),width = 12)
+  pygame.draw.line(screen, (0,0,0),(275, 500-125),(360,380-125),width = 12)
 
 
 run = True
@@ -154,7 +165,12 @@ while run:
           #blitting the hidden word and other text
           hidden_word_text = font1.render(hidden_word,True, (0,0,0))
           screen.blit(hidden_word_text, (500,500)) 
-          Tries = Tries - 1
+          if guess not in word:
+            Tries = Tries - 1
+            Fails += 1
+          if Tries <=0:
+            time.sleep(3)
+            run = False
           Tries_string = 'Tries remaining : {}'.format(Tries)
           Tries_text = font1.render(Tries_string,True,(0,0,0))
           screen.blit(Tries_text, (450,600))
@@ -167,39 +183,32 @@ while run:
             screen.blit(hangman_text,(500,500))
           
           #drawing hangman upon failure of guesses
-          if Fails == 0 and guess not in word and draw_once == False:
+          if Fails == 3 and guess not in word and draw_once == False:
             draw_head()
-            Fails += 1
             draw_once = True
 
-          if Fails == 1 and guess not in word and draw_once == False:
+          if Fails == 4 and guess not in word and draw_once == False:
             draw_torso()
-            Fails += 1
             draw_once = True
 
-          if Fails == 2 and guess not in word and draw_once == False:
+          if Fails == 5 and guess not in word and draw_once == False:
             draw_leg1()
-            Fails += 1
             draw_once = True
           
-          if Fails == 3 and guess not in word and draw_once == False:
+          if Fails == 6 and guess not in word and draw_once == False:
             draw_leg2()
-            Fails += 1
             draw_once = True
            
-          if Fails == 4 and guess not in word and draw_once == False:
+          if Fails == 7 and guess not in word and draw_once == False:
             draw_arm1()
-            Fails += 1
             draw_once = True
           
-          if Fails == 5 and guess not in word and draw_once == False:
+          if Fails == 8 and guess not in word and draw_once == False:
             draw_arm2()
-            Fails += 1
             draw_once = True
-
-          if Fails > 5 and guess not in word and draw_once == False:
-            draw_face_happy()
-            
+          
+          if Fails == 9 and guess not in word and draw_once == False:
+            Hang()
 
           #draw one variable is used such that on pressing enter a single body 
           #part will be shown on 1 failure insted of all at once
