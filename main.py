@@ -26,8 +26,8 @@ input_box = pygame.Rect(430,250,550,50)
 font3 = pygame.font.Font(None, 43)
 font4 = pygame.font.Font(None, 30)
 input_box_text = font3.render('Word to be guessed goes here',True, (0,0,0))
-small_text = font4.render('press spacebar',True,(0,0,0))
-screen.blit(small_text, (630,222))
+small_text = font4.render('Type a word and press SPACEBAR',True,(0,0,0))
+screen.blit(small_text, (550,222))
 screen.blit(input_box_text,((500, 190)))
 font = pygame.font.Font(None,32)
 input_text = ''
@@ -44,20 +44,20 @@ draw_once = False
 #Game over text
 over_font = pygame.font.Font ('freesansbold.ttf', 64)
 
-#Game won text
-won_font = pygame.font.Font ('freesansbold.ttf', 64)
 
 #functions for showing 'YOU WIN' and 'GAME OVER' text upon victory or defeat
 def game_won():
-    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 0))
-    screen.blit (won_text, (350, 350))
+    pygame.draw.rect(screen, (200,200,200), pygame.Rect(450,500,550,500))
+    won_text = over_font.render ("YOU WIN", True, ( 0, 0, 0))
+    screen.blit (won_text, (470, 455))
 
 def game_over_text():
     pygame.draw.rect(screen, (200,200,200), pygame.Rect(450,500,550,500))
     over_text = over_font.render ("GAME OVER", True, (0,0,0))
-    screen.blit (over_text, (500, 500))  
+    screen.blit (over_text, (470, 455))  
  
-
+#function for creating the  hidden word and showing letters 
+#which have been guessed
 def guessing(word):
   global hidden_word,index,convert
 
@@ -105,7 +105,6 @@ def Hang():
   pygame.draw.line(screen, (0,0,0), (275, 375),(180,255),width = 12)
   pygame.draw.line(screen, (0,0,0),(275, 375),(360,255),width = 12)
 
-
 run = True
 typing = True
 typing2 = False
@@ -116,7 +115,6 @@ while run:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       run = False
-
     if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
 
       if typing == True:
@@ -145,10 +143,9 @@ while run:
           typing = False
           typing2 = True
           pygame.draw.rect(screen, (0,0,0), input_box)
-          pygame.draw.rect(screen, (200,200,200),pygame.Rect(499,190,500,33))
-          pygame.draw.rect(screen, (200,200,200),pygame.Rect(630,222,300,20))
+          pygame.draw.rect(screen, (200,200,200),pygame.Rect(488,190,500,55))
           guess_text = font3.render('Guess a letter from the word',True, (0,0,0))
-          small_text2 = font4.render('(press enter)',True,(0,0,0))
+          small_text2 = font4.render('press enter',True,(0,0,0))
           screen.blit(small_text2,((630,222)))
           screen.blit(guess_text,((500, 190)))
       
@@ -244,4 +241,3 @@ while run:
 
   pygame.display.update()
   Clock.tick(60)
-print(pygame.mouse.get_pos())
