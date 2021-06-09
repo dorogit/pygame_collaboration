@@ -1,6 +1,6 @@
-# pygame_collaboration
+# HangMan
 
-Repository for making a PyGame “HangMan” 
+A PyGame “HangMan” 
 
 HangMan is a word-guessing two-player game in which one player creates a word to be guessed
 then, all the letters of the word will be shown represented as dashes(-) and the guesser 
@@ -14,12 +14,13 @@ stickman is completed, the stickman will be complete and hanged, hence marking d
 
 This is the concept behind HangMan.
 
-
-what to implement in order to make HangMan fucntional:
--An input window to take input of the word which is to be guessed and the alphabet guessed by the other player
--A *RULES* button to take the user to a window which will display rules and info of the game
--A function to convert the word given by the player to dashes, and make letters appear when corrosponding alphabet is guessed
--A function to draw lines of the stickman/ draw the stickman's limbs each time a wrong alphabet is guessed
--A *Hanging animation* upon the guesser's defeat for the quality of the game
--Already blitted-and-updated Gallow made up of lines and rectangles along with the stickman's head(circle) as a starting point
--"Play again" and "Quit" buttons (optional once the game's main algorithm is complete)
+HOW TO PLAY :
+-Press the rules button in the corner to view the rules
+-Type in a word you want the other player to guess and press SPACEBAR
+-Now it's the other player's turn to guess the word typed by you, letter by letter
+-Guess an alphabet from the word typed in by the first player, type it, and press ENTER
+-If the alphabet you guessed is correct, all letters of the alphabet you guessed in the hidden word will be displayed
+-If the alphabet you guessed is incorrect, a part of the HangMan will be drawn and will continue to be drawn
+-If you ran out of tries, HangMan will be *Hanged*
+-If you guess the letter within given tries, you will win and HangMan will be released 
+*HAVE FUN*
