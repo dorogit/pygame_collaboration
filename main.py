@@ -1,5 +1,4 @@
 import pygame
-import math
 import time
 
 pygame.init()
@@ -41,7 +40,6 @@ letter_in_guessbox = False
 convert = False
 Fails = 0
 draw_once = False
-PI = math.pi
 
 #Game over text
 over_font = pygame.font.Font ('freesansbold.ttf', 64)
@@ -49,7 +47,16 @@ over_font = pygame.font.Font ('freesansbold.ttf', 64)
 #Game won text
 won_font = pygame.font.Font ('freesansbold.ttf', 64)
 
+#functions for showing 'YOU WIN' and 'GAME OVER' text upon victory or defeat
+def game_won():
+    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 0))
+    screen.blit (won_text, (350, 350))
 
+def game_over_text():
+    pygame.draw.rect(screen, (200,200,200), pygame.Rect(450,500,550,500))
+    over_text = over_font.render ("GAME OVER", True, (0,0,0))
+    screen.blit (over_text, (500, 500))  
+ 
 
 def guessing(word):
   global hidden_word,index,convert
@@ -76,14 +83,6 @@ def draw_head():
 def draw_torso():
   pygame.draw.line(screen,(0,0,0), (273, 213), (273,476), width = 12)
 
-def game_over_text():
-    over_text = over_font.render ("GAME OVER", True, (0,0,0))
-    screen.blit (over_text, (600, 500))  
- 
-def game_won():
-    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 0))
-    screen.blit (won_text, (350, 350))
-
 def draw_leg1():
   pygame.draw.line(screen,(0,0,0), (273,476),(160, 645), width = 12)
 
@@ -99,12 +98,12 @@ def draw_arm2():
 def Hang():
   pygame.draw.rect(screen, (200,200,200), pygame.Rect(150,110,275,560))
   pygame.draw.line(screen, (0,0,0), (273,50),(273,200),width = 9)
-  pygame.draw.circle(screen, (0,0,0,), (300,365-125), 50, width = 9)
-  pygame.draw.line(screen,(0,0,0), (273, 413-135), (273,676-125), width = 12)
-  pygame.draw.line(screen,(0,0,0), (273,676-125),(160, 845-125), width = 12)
-  pygame.draw.line(screen,(0,0,0), (273,676-125),(380,845-125), width = 12)
-  pygame.draw.line(screen, (0,0,0), (275, 500-125),(180,380-125),width = 12)
-  pygame.draw.line(screen, (0,0,0),(275, 500-125),(360,380-125),width = 12)
+  pygame.draw.circle(screen, (0,0,0,), (300,240), 50, width = 9)
+  pygame.draw.line(screen,(0,0,0), (273, 278), (273,551), width = 12)
+  pygame.draw.line(screen,(0,0,0), (273,551),(160, 720), width = 12)
+  pygame.draw.line(screen,(0,0,0), (273,551),(380,720), width = 12)
+  pygame.draw.line(screen, (0,0,0), (275, 375),(180,255),width = 12)
+  pygame.draw.line(screen, (0,0,0),(275, 375),(360,255),width = 12)
 
 
 run = True
@@ -169,8 +168,9 @@ while run:
               guess = event.unicode
               letter_in_guessbox = True
 
-        guessing(word)
+
         if event.key == pygame.K_RETURN and typing2 == True:
+          guessing(word)
 
           #putting a rect to hide old text
           pygame.draw.rect(screen, (200,200,200), pygame.Rect(500,500,500,500))
@@ -200,31 +200,31 @@ while run:
             game_won()
           
           #drawing hangman upon failure of guesses
-          if Fails == 3 and guess not in word and draw_once == False:
+          if Fails == 2 and guess not in word and draw_once == False:
             draw_head()
             draw_once = True
 
-          if Fails == 4 and guess not in word and draw_once == False:
+          if Fails == 3 and guess not in word and draw_once == False:
             draw_torso()
             draw_once = True
 
-          if Fails == 5 and guess not in word and draw_once == False:
+          if Fails == 4 and guess not in word and draw_once == False:
             draw_leg1()
             draw_once = True
           
-          if Fails == 6 and guess not in word and draw_once == False:
+          if Fails == 5 and guess not in word and draw_once == False:
             draw_leg2()
             draw_once = True
            
-          if Fails == 7 and guess not in word and draw_once == False:
+          if Fails == 6 and guess not in word and draw_once == False:
             draw_arm1()
             draw_once = True
           
-          if Fails == 8 and guess not in word and draw_once == False:
+          if Fails == 7 and guess not in word and draw_once == False:
             draw_arm2()
             draw_once = True
           
-          if Fails == 9 and guess not in word and draw_once == False:
+          if Fails == 8 and guess not in word and draw_once == False:
             Hang()
             game_over_text()
 
