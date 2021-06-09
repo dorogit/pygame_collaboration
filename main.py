@@ -43,6 +43,14 @@ Fails = 0
 draw_once = False
 PI = math.pi
 
+#Game over text
+over_font = pygame.font.Font ('freesansbold.ttf', 64)
+
+#Game won text
+won_font = pygame.font.Font ('freesansbold.ttf', 64)
+
+
+
 def guessing(word):
   global hidden_word,index,convert
 
@@ -67,6 +75,14 @@ def draw_head():
 
 def draw_torso():
   pygame.draw.line(screen,(0,0,0), (273, 213), (273,476), width = 12)
+
+def game_over_text():
+    over_text = over_font.render ("GAME OVER", True, (0,0,0))
+    screen.blit (over_text, (600, 500))  
+ 
+def game_won():
+    won_text = won_font.render ("YOU WIN", True, ( 0, 0, 255))
+    screen.blit (won_text, (350, 350))
 
 def draw_leg1():
   pygame.draw.line(screen,(0,0,0), (273,476),(160, 645), width = 12)
@@ -181,6 +197,7 @@ while run:
             pygame.draw.rect(screen, (200,200,200), pygame.Rect(400,500,500,500))
             hangman_text = font0.render('HangMan Lives ', True,(0,0,0))
             screen.blit(hangman_text,(500,500))
+            game_won()
           
           #drawing hangman upon failure of guesses
           if Fails == 3 and guess not in word and draw_once == False:
@@ -209,6 +226,7 @@ while run:
           
           if Fails == 9 and guess not in word and draw_once == False:
             Hang()
+            game_over_text()
 
           #draw one variable is used such that on pressing enter a single body 
           #part will be shown on 1 failure insted of all at once
