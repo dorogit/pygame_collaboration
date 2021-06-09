@@ -48,8 +48,15 @@ over_font = pygame.font.Font ('freesansbold.ttf', 64)
 #functions for showing 'YOU WIN' and 'GAME OVER' text upon victory or defeat
 def game_won():
     pygame.draw.rect(screen, (200,200,200), pygame.Rect(450,500,550,500))
+    pygame.draw.rect(screen, (200,200,200), pygame.Rect(150,110,275,560))
     won_text = over_font.render ("YOU WIN", True, ( 0, 0, 0))
     screen.blit (won_text, (470, 455))
+    pygame.draw.circle(screen, (0,0,0,), (273,215), 50, width = 9)
+    pygame.draw.line(screen,(0,0,0), (273, 263), (273,526), width = 12)
+    pygame.draw.line(screen,(0,0,0), (273,526),(160, 695), width = 12)
+    pygame.draw.line(screen,(0,0,0), (273,526),(380,695), width = 12)
+    pygame.draw.line(screen, (0,0,0), (275, 350),(180,230),width = 12)
+    pygame.draw.line(screen, (0,0,0),(275, 350),(360,230),width = 12)
 
 def game_over_text():
     pygame.draw.rect(screen, (200,200,200), pygame.Rect(450,500,550,500))
@@ -190,12 +197,7 @@ while run:
 
           #if player completely guesses the word
           if hidden_word == word and Tries >=0:
-            font0 = pygame.font.Font(None,50)
-            pygame.draw.rect(screen, (200,200,200), pygame.Rect(400,500,500,500))
-            hangman_text = font0.render('HangMan Lives ', True,(0,0,0))
-            screen.blit(hangman_text,(500,500))
             game_won()
-          
           #drawing hangman upon failure of guesses
           if Fails == 2 and guess not in word and draw_once == False:
             draw_head()
@@ -241,3 +243,4 @@ while run:
 
   pygame.display.update()
   Clock.tick(60)
+print(pygame.mouse.get_pos())
